@@ -28,10 +28,6 @@ from bs4 import BeautifulSoup
 FIND_MY_RACE_URL = "https://hyrox.com/find-my-race/"
 STATE_FILE = Path(__file__).parent / "state.json"
 
-# US state/territory abbreviations, used to auto-detect USA races from each
-# card's address text (e.g. "Tampa, FL, USA") instead of a hand-maintained
-# city list. This means brand-new USA races get picked up automatically,
-# with no code edits needed when hyrox.com adds one.
 US_STATE_CODES = {
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID",
     "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
@@ -39,9 +35,6 @@ US_STATE_CODES = {
     "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
     "WI", "WY", "DC",
 }
-# Matches ", XX" (comma + optional space + two uppercase letters) so it only
-# fires on address-style text, not on stray lowercase English words like
-# "in" or "or" that would otherwise false-positive-match state codes.
 US_STATE_PATTERN = re.compile(
     r",\s*(" + "|".join(sorted(US_STATE_CODES)) + r")\b"
 )
@@ -64,12 +57,9 @@ def fetch_races():
     soup = BeautifulSoup(resp.text, "html.parser")
 
     races = []
-    # Each event card has an <h2> (or similar) title link to /event/... and
-    # a nearby CTA link whose text is either "Buy Tickets" or "Find out more".
     for link in soup.find_all("a", href=re.compile(r"/event/")):
         text = link.get_text(strip=True)
         if text.lower() in ON_SALE_PHRASES or text.lower() in NOT_ON_SALE_PHRASES:
-            # Walk up to the enclosing card to find the title + url + address.
             card = link.find_parent(["div", "article", "li"])
             title_tag = card.find(["h2", "h3"]) if card else None
             title = title_tag.get_text(strip=True) if title_tag else None
@@ -81,9 +71,9 @@ def fetch_races():
                     "url": url,
                     "status": "on_sale" if text.lower() in ON_SALE_PHRASES else "not_on_sale",
                     "is_usa": is_usa_race(card_text),
+                    "debug_card_text": card_text,
                 })
 
-    # De-duplicate (site sometimes repeats a card for filter variants)
     seen = {}
     for r in races:
         seen[r["url"]] = r
@@ -121,7 +111,11 @@ def main():
     print(f"Found {len(races)} total races, {len(usa_races)} in the USA.")
 
     if not usa_races:
-        print("No USA races found on the page — site structure may have changed.")
+        print("No USA races found — showing sample card text for debugging:")
+        for r in races[:5]:
+            print(f"  TITLE: {r['title']!r}")
+            print(f"  CARD TEXT: {r.get('debug_card_text', '')!r}")
+            print("  ---")
         return
 
     state = load_state()
