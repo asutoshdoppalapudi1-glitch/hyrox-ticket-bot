@@ -1,74 +1,542 @@
 {
+  "https://hyrox.com/event/30454/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "24/7 FITNESS HYROX Sanya"
+  },
+  "https://hyrox.com/event/aia-hyrox-singapore/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "AIA HYROX Singapore"
+  },
+  "https://hyrox.com/event/all-inclusive-fitness-hyrox-cologne/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "all inclusive Fitness HYROX Cologne"
+  },
+  "https://hyrox.com/event/byd-hyrox-osaka/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "BYD HYROX Osaka"
+  },
+  "https://hyrox.com/event/cisalfa-hyrox-rimini/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Rimini"
+  },
   "https://hyrox.com/event/factor_-hyrox-atlanta/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "Factor_ HYROX Atlanta"
   },
+  "https://hyrox.com/event/fitness-first-hyrox-frankfurt/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "Fitness First HYROX Frankfurt"
+  },
+  "https://hyrox.com/event/goodlife-hyrox-toronto-26-27/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "GoodLife HYROX Toronto"
+  },
   "https://hyrox.com/event/hwpo-hyrox-boston-26-27/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "HWPO HYROX Boston"
   },
+  "https://hyrox.com/event/hyrox-abu-dhabi/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Abu Dhabi"
+  },
+  "https://hyrox.com/event/hyrox-amsterdam/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Amsterdam"
+  },
   "https://hyrox.com/event/hyrox-anaheim-26-27/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "Centr HYROX Anaheim"
   },
+  "https://hyrox.com/event/hyrox-auckland/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "BYD HYROX Auckland"
+  },
+  "https://hyrox.com/event/hyrox-bangkok/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "BYD HYROX Bangkok"
+  },
+  "https://hyrox.com/event/hyrox-barcelona-2/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "Leapmotor HYROX Barcelona"
+  },
+  "https://hyrox.com/event/hyrox-bari/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Bari"
+  },
+  "https://hyrox.com/event/hyrox-basel/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Basel"
+  },
+  "https://hyrox.com/event/hyrox-bengaluru/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "Hyrox Bengaluru"
+  },
+  "https://hyrox.com/event/hyrox-bilbao/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Bilbao"
+  },
+  "https://hyrox.com/event/hyrox-birmingham/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Birmingham"
+  },
+  "https://hyrox.com/event/hyrox-bordeaux-s26-27/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "INTERSPORT HYROX BORDEAUX"
+  },
+  "https://hyrox.com/event/hyrox-brisbane/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "BYD HYROX Brisbane"
+  },
+  "https://hyrox.com/event/hyrox-budapest/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Budapest"
+  },
+  "https://hyrox.com/event/hyrox-buenos-aires/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Buenos Aires"
+  },
+  "https://hyrox.com/event/hyrox-cairo/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Cairo"
+  },
+  "https://hyrox.com/event/hyrox-cancun/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Cancun"
+  },
+  "https://hyrox.com/event/hyrox-cardiff-2/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Cardiff"
+  },
   "https://hyrox.com/event/hyrox-chicago-26-27/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "Creapure HYROX Chicago"
   },
+  "https://hyrox.com/event/hyrox-copenhagen/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Copenhagen"
+  },
   "https://hyrox.com/event/hyrox-dallas/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "HYROX Dallas"
   },
   "https://hyrox.com/event/hyrox-denver/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "The Feed HYROX Denver"
   },
+  "https://hyrox.com/event/hyrox-dubai/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Dubai"
+  },
+  "https://hyrox.com/event/hyrox-dublin/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Dublin"
+  },
+  "https://hyrox.com/event/hyrox-dusseldorf/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "EDEKA HYROX D\u00fcsseldorf"
+  },
+  "https://hyrox.com/event/hyrox-gdansk/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX GDA\u0143SK"
+  },
+  "https://hyrox.com/event/hyrox-geneva/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "Let\u2019s Go Fitness HYROX Geneva"
+  },
+  "https://hyrox.com/event/hyrox-gent/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Gent"
+  },
+  "https://hyrox.com/event/hyrox-glasgow-2/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Glasgow"
+  },
+  "https://hyrox.com/event/hyrox-guadalajara/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Guadalajara"
+  },
+  "https://hyrox.com/event/hyrox-guangzhou/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Guangzhou"
+  },
+  "https://hyrox.com/event/hyrox-gujarat/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "Hyrox Gujarat"
+  },
+  "https://hyrox.com/event/hyrox-helsinki-2/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX HELSINKI"
+  },
+  "https://hyrox.com/event/hyrox-helsinki/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX HELSINKI"
+  },
+  "https://hyrox.com/event/hyrox-hong-kong/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "AIA HYROX Hong Kong"
+  },
   "https://hyrox.com/event/hyrox-houston-26-27/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "Academy HYROX Houston"
   },
+  "https://hyrox.com/event/hyrox-incheon/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "BYD HYROX Incheon"
+  },
+  "https://hyrox.com/event/hyrox-karlsruhe/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Karlsruhe"
+  },
+  "https://hyrox.com/event/hyrox-katowice/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "DAFI HYROX KATOWICE"
+  },
+  "https://hyrox.com/event/hyrox-krakow-26-27/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX KRAK\u00d3W"
+  },
+  "https://hyrox.com/event/hyrox-kuala-lumpur/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "AirAsia HYROX Kuala Lumpur"
+  },
   "https://hyrox.com/event/hyrox-las-vegas-26-27/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "HYROX Las Vegas"
   },
+  "https://hyrox.com/event/hyrox-london-excel/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "Amazon HYROX London"
+  },
+  "https://hyrox.com/event/hyrox-lyon-s26-27/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX LYON"
+  },
+  "https://hyrox.com/event/hyrox-madrid/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "Fitness Park HYROX Madrid"
+  },
+  "https://hyrox.com/event/hyrox-malaga/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX M\u00e1laga"
+  },
+  "https://hyrox.com/event/hyrox-manchester/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Manchester"
+  },
+  "https://hyrox.com/event/hyrox-mechelen/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Mechelen"
+  },
+  "https://hyrox.com/event/hyrox-melbourne/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "BYD HYROX Melbourne"
+  },
+  "https://hyrox.com/event/hyrox-mexico-city/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Mexico City"
+  },
+  "https://hyrox.com/event/hyrox-milan/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Milan"
+  },
+  "https://hyrox.com/event/hyrox-monterrey/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Monterrey"
+  },
+  "https://hyrox.com/event/hyrox-nagoya/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Nagoya"
+  },
   "https://hyrox.com/event/hyrox-nashville/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "HYROX Nashville"
   },
   "https://hyrox.com/event/hyrox-new-york/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "HYROX New York"
   },
+  "https://hyrox.com/event/hyrox-nice-s26-27/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "TRAINSWEATEAT HYROX NICE"
+  },
+  "https://hyrox.com/event/hyrox-noida/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "Hyrox Noida"
+  },
+  "https://hyrox.com/event/hyrox-oslo/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Oslo"
+  },
+  "https://hyrox.com/event/hyrox-ottawa-26-27/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Ottawa"
+  },
+  "https://hyrox.com/event/hyrox-paris-grand-palais-s26-27/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "MAYBELLINE HYROX PARIS GRAND PALAIS"
+  },
+  "https://hyrox.com/event/hyrox-paris-s26-27/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "FITNESS PARK HYROX PARIS"
+  },
   "https://hyrox.com/event/hyrox-portland-26-27/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "HYROX Portland"
   },
+  "https://hyrox.com/event/hyrox-poznan/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX POZNA\u0143"
+  },
+  "https://hyrox.com/event/hyrox-riga/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX RIGA"
+  },
+  "https://hyrox.com/event/hyrox-rio-de-janeiro/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Rio de Janeiro"
+  },
+  "https://hyrox.com/event/hyrox-rome/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Rome"
+  },
+  "https://hyrox.com/event/hyrox-rotterdam/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Rotterdam"
+  },
   "https://hyrox.com/event/hyrox-san-diego-26-27/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "E\u014dS Fitness HYROX San Diego"
   },
+  "https://hyrox.com/event/hyrox-sao-paulo-2/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX S\u00e3o Paulo"
+  },
+  "https://hyrox.com/event/hyrox-sao-paulo/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX S\u00e3o Paulo"
+  },
+  "https://hyrox.com/event/hyrox-seoul/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "AirAsia HYROX Seoul"
+  },
+  "https://hyrox.com/event/hyrox-shanghai-1031/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "ZhongAn HYROX Shanghai"
+  },
+  "https://hyrox.com/event/hyrox-taipei/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Taipei"
+  },
   "https://hyrox.com/event/hyrox-tampa/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "MyFitnessPal HYROX Tampa"
   },
+  "https://hyrox.com/event/hyrox-toulouse-s26-27/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "LUCIS HYROX TOULOUSE"
+  },
+  "https://hyrox.com/event/hyrox-utrecht/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Utrecht"
+  },
+  "https://hyrox.com/event/hyrox-valencia/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Valencia"
+  },
+  "https://hyrox.com/event/hyrox-vancouver/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Vancouver"
+  },
+  "https://hyrox.com/event/hyrox-verona/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Verona"
+  },
+  "https://hyrox.com/event/hyrox-vienna/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "INTERSPORT HYROX Vienna"
+  },
+  "https://hyrox.com/event/hyrox-warsaw-26-27/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX WARSAW"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-amsterdam/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars Amsterdam"
+  },
   "https://hyrox.com/event/hyrox-youngstars-anaheim/": {
+    "is_usa": true,
     "status": "on_sale",
     "title": "HYROX Youngstars Anaheim"
   },
   "https://hyrox.com/event/hyrox-youngstars-atlanta/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "HYROX Youngstars Atlanta"
   },
+  "https://hyrox.com/event/hyrox-youngstars-birmingham/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars Birmingham"
+  },
   "https://hyrox.com/event/hyrox-youngstars-houston/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "HYROX Youngstars Houston"
   },
+  "https://hyrox.com/event/hyrox-youngstars-london-excel/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars London ExCeL"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-oslo/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars Oslo"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-paris/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars Paris"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-toulouse/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "HYROX Youngstars Toulouse"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-utrecht/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars Utrecht"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-valencia/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "HYROX Youngstars Valencia"
+  },
   "https://hyrox.com/event/inbody-hyrox-phoenix-26-27/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "InBody HYROX Phoenix"
   },
+  "https://hyrox.com/event/intersport-hyrox-hamburg/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "INTERSPORT HYROX Hamburg"
+  },
+  "https://hyrox.com/event/intersport-hyrox-stockholm-arena/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "INTERSPORT HYROX Stockholm"
+  },
+  "https://hyrox.com/event/puma-hyrox-world-championships-hong-kong/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "PUMA HYROX World Championships Hong Kong"
+  },
   "https://hyrox.com/event/sweat-pals-hyrox-miami-beach-26-27/": {
+    "is_usa": true,
     "status": "not_on_sale",
     "title": "Sweatpals HYROX Miami Beach"
+  },
+  "https://hyrox.com/event/virgin-active-hyrox-cape-town/": {
+    "is_usa": true,
+    "status": "not_on_sale",
+    "title": "Virgin Active HYROX Cape Town ||"
+  },
+  "https://hyrox.com/event/virgin-active-hyrox-johannesburg-26-27/": {
+    "is_usa": true,
+    "status": "on_sale",
+    "title": "Virgin Active HYROX Johannesburg"
   }
 }
