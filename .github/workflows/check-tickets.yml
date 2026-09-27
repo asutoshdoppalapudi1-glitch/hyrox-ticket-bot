@@ -1,0 +1,39 @@
+name: HYROX USA Ticket Watcher
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ticket check
+        env:
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_PHONE_NUMBER_ID: ${{ secrets.WHATSAPP_PHONE_NUMBER_ID }}
+          WHATSAPP_TO: ${{ secrets.WHATSAPP_TO }}
+          WHATSAPP_TEMPLATE_NAME: ${{ secrets.WHATSAPP_TEMPLATE_NAME }}
+          WHATSAPP_TEMPLATE_LANG: ${{ secrets.WHATSAPP_TEMPLATE_LANG }}
+        run: python check_tickets.py
+
+      - name: Commit updated state
+        run: |
+          git config user.name "hyrox-ticket-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || git commit -m "Update ticket state [skip ci]"
+          git push
