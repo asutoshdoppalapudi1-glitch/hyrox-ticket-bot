@@ -4,19 +4,15 @@ HYROX USA Ticket Watcher
 -------------------------
 Scrapes https://hyrox.com/find-my-race/ , filters it down to USA races,
 compares each race's ticket status against the last known status
-(stored in state.json), and sends a WhatsApp message via the official
-WhatsApp Cloud API whenever a race's status changes to "on sale"
-(covers both first release and restocks after a sell-out).
+(stored in state.json), and sends a WhatsApp message via CallMeBot
+whenever a race's status changes to "on sale" (covers both first
+release and restocks after a sell-out).
 
 Environment variables required (set as GitHub Actions secrets):
-    WHATSAPP_TOKEN            Permanent or temporary Meta access token
-    WHATSAPP_PHONE_NUMBER_ID  The "Phone number ID" from Meta dev console
-    WHATSAPP_TO               Recipient's WhatsApp number, digits only,
-                               with country code, e.g. 15551234567
-    WHATSAPP_TEMPLATE_NAME    Name of the approved message template to use
-                               (see README.md for why a template is needed)
-    WHATSAPP_TEMPLATE_LANG    Template language code, e.g. "en_US" (optional,
-                               defaults to en_US)
+    CALLMEBOT_PHONE   Your WhatsApp number, digits only with country code,
+                      e.g. 15551234567
+    CALLMEBOT_APIKEY  The API key CallMeBot sent you on WhatsApp after
+                      you activated it (see README.md)
 """
 
 import json
@@ -24,6 +20,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
@@ -45,7 +42,6 @@ NOT_ON_SALE_PHRASES = {"find out more", "date coming soon"}
 
 def is_usa_race(title: str) -> bool:
     t = title.lower()
-    # Exclude Youngstars (kids) races unless you want those tracked too.
     return any(city in t for city in USA_CITY_KEYWORDS)
 
 
@@ -57,12 +53,9 @@ def fetch_races():
     soup = BeautifulSoup(resp.text, "html.parser")
 
     races = []
-    # Each event card has an <h2> (or similar) title link to /event/... and
-    # a nearby CTA link whose text is either "Buy Tickets" or "Find out more".
     for link in soup.find_all("a", href=re.compile(r"/event/")):
         text = link.get_text(strip=True)
         if text.lower() in ON_SALE_PHRASES or text.lower() in NOT_ON_SALE_PHRASES:
-            # Walk up to the enclosing card to find the title + url.
             card = link.find_parent(["div", "article", "li"])
             title_tag = card.find(["h2", "h3"]) if card else None
             title = title_tag.get_text(strip=True) if title_tag else None
@@ -74,7 +67,6 @@ def fetch_races():
                     "status": "on_sale" if text.lower() in ON_SALE_PHRASES else "not_on_sale",
                 })
 
-    # De-duplicate (site sometimes repeats a card for filter variants)
     seen = {}
     for r in races:
         seen[r["url"]] = r
@@ -92,37 +84,15 @@ def save_state(state):
 
 
 def send_whatsapp_template(title, url):
-    token = os.environ["WHATSAPP_TOKEN"]
-    phone_number_id = os.environ["WHATSAPP_PHONE_NUMBER_ID"]
-    to = os.environ["WHATSAPP_TO"]
-    template_name = os.environ["WHATSAPP_TEMPLATE_NAME"]
-    lang = os.environ.get("WHATSAPP_TEMPLATE_LANG", "en_US")
+    phone = os.environ["CALLMEBOT_PHONE"]
+    apikey = os.environ["CALLMEBOT_APIKEY"]
 
-    api_url = f"https://graph.facebook.com/v21.0/{phone_number_id}/messages"
-    payload = {
-        "messaging_product": "whatsapp",
-        "to": to,
-        "type": "template",
-        "template": {
-            "name": template_name,
-            "language": {"code": lang},
-            "components": [
-                {
-                    "type": "body",
-                    "parameters": [
-                        {"type": "text", "text": title},
-                        {"type": "text", "text": url},
-                    ],
-                }
-            ],
-        },
-    }
-    resp = requests.post(
-        api_url,
-        headers={"Authorization": f"Bearer {token}"},
-        json=payload,
-        timeout=30,
+    message = f"🎉 HYROX tickets are now on sale for {title}! Grab yours here: {url}"
+    api_url = (
+        "https://api.callmebot.com/whatsapp.php"
+        f"?phone={phone}&text={quote(message)}&apikey={apikey}"
     )
+    resp = requests.get(api_url, timeout=30)
     if resp.status_code >= 300:
         print(f"WhatsApp send failed for '{title}': {resp.status_code} {resp.text}", file=sys.stderr)
     else:
