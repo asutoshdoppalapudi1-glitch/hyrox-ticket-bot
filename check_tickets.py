@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+import time
 from pathlib import Path
 from urllib.parse import quote
 
@@ -28,25 +29,30 @@ from bs4 import BeautifulSoup
 FIND_MY_RACE_URL = "https://hyrox.com/find-my-race/"
 STATE_FILE = Path(__file__).parent / "state.json"
 
-US_STATE_CODES = {
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID",
-    "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
-    "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
-    "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
-    "WI", "WY", "DC",
+# Full US state names + abbreviations, used to detect USA races from each
+# individual event page's address text (the find-my-race listing cards
+# don't include country/state info, only a short city code).
+US_STATE_NAMES = {
+    "alabama", "alaska", "arizona", "arkansas", "california", "colorado",
+    "connecticut", "delaware", "florida", "hawaii", "idaho", "illinois",
+    "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine",
+    "maryland", "massachusetts", "michigan", "minnesota", "mississippi",
+    "missouri", "montana", "nebraska", "nevada", "new hampshire",
+    "new jersey", "new mexico", "new york", "north carolina",
+    "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania",
+    "rhode island", "south carolina", "south dakota", "tennessee",
+    "texas", "utah", "vermont", "virginia", "washington",
+    "west virginia", "wisconsin", "wyoming",
 }
-US_STATE_PATTERN = re.compile(
-    r",\s*(" + "|".join(sorted(US_STATE_CODES)) + r")\b"
-)
+US_MARKERS = {"usa", "united states"} | US_STATE_NAMES
 
 ON_SALE_PHRASES = {"buy tickets", "buy ticket"}
 NOT_ON_SALE_PHRASES = {"find out more", "date coming soon"}
 
 
-def is_usa_race(card_text: str) -> bool:
-    if "usa" in card_text.lower() or "united states" in card_text.lower():
-        return True
-    return bool(US_STATE_PATTERN.search(card_text))
+def is_usa_page_text(page_text: str) -> bool:
+    t = page_text.lower()
+    return any(marker in t for marker in US_MARKERS)
 
 
 def fetch_races():
@@ -64,20 +70,31 @@ def fetch_races():
             title_tag = card.find(["h2", "h3"]) if card else None
             title = title_tag.get_text(strip=True) if title_tag else None
             url = link.get("href")
-            card_text = card.get_text(" ", strip=True) if card else ""
             if title and url:
                 races.append({
                     "title": title,
                     "url": url,
                     "status": "on_sale" if text.lower() in ON_SALE_PHRASES else "not_on_sale",
-                    "is_usa": is_usa_race(card_text),
-                    "debug_card_text": card_text,
                 })
 
     seen = {}
     for r in races:
         seen[r["url"]] = r
     return list(seen.values())
+
+
+def fetch_is_usa(url: str) -> bool:
+    """Fetch a single event's own page and check its address text for a
+    USA state/country marker. Only called once per race, then cached."""
+    try:
+        resp = requests.get(url, timeout=30, headers={
+            "User-Agent": "Mozilla/5.0 (compatible; HyroxTicketWatcher/1.0)"
+        })
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Could not fetch {url} to check country: {e}", file=sys.stderr)
+        return False
+    return is_usa_page_text(resp.text)
 
 
 def load_state():
@@ -107,43 +124,50 @@ def send_whatsapp(message):
 
 def main():
     races = fetch_races()
-    usa_races = [r for r in races if r["is_usa"]]
-    print(f"Found {len(races)} total races, {len(usa_races)} in the USA.")
-
-    if not usa_races:
-        print("No USA races found — showing sample card text for debugging:")
-        for r in races[:5]:
-            print(f"  TITLE: {r['title']!r}")
-            print(f"  CARD TEXT: {r.get('debug_card_text', '')!r}")
-            print("  ---")
-        return
+    print(f"Found {len(races)} total races on the page.")
 
     state = load_state()
     changed = False
+    usa_count = 0
 
-    for race in usa_races:
+    for race in races:
         key = race["url"]
+        prev_entry = state.get(key, {})
         is_new_race = key not in state
-        prev_status = state.get(key, {}).get("status")
+        prev_status = prev_entry.get("status")
         cur_status = race["status"]
 
-        if is_new_race:
-            print(f"New USA race detected: {race['title']}")
-            status_word = "already on sale" if cur_status == "on_sale" else "not on sale yet"
-            send_whatsapp(
-                f"🆕 A new HYROX USA race just appeared: {race['title']} "
-                f"(tickets {status_word}). {race['url']}"
-            )
-        elif cur_status == "on_sale" and prev_status != "on_sale":
-            print(f"Ticket release detected: {race['title']}")
-            send_whatsapp(
-                f"🎉 HYROX tickets are now on sale for {race['title']}! "
-                f"Grab yours here: {race['url']}"
-            )
+        # Determine (and cache) whether this is a USA race. Only fetches
+        # the individual event page the first time we see this URL.
+        if "is_usa" in prev_entry:
+            is_usa = prev_entry["is_usa"]
+        else:
+            is_usa = fetch_is_usa(key)
+            time.sleep(0.5)  # be polite to hyrox.com's servers
 
-        if prev_status != cur_status or is_new_race:
+        if is_usa:
+            usa_count += 1
+
+        if is_usa:
+            if is_new_race:
+                print(f"New USA race detected: {race['title']}")
+                status_word = "already on sale" if cur_status == "on_sale" else "not on sale yet"
+                send_whatsapp(
+                    f"🆕 A new HYROX USA race just appeared: {race['title']} "
+                    f"(tickets {status_word}). {key}"
+                )
+            elif cur_status == "on_sale" and prev_status != "on_sale":
+                print(f"Ticket release detected: {race['title']}")
+                send_whatsapp(
+                    f"🎉 HYROX tickets are now on sale for {race['title']}! "
+                    f"Grab yours here: {key}"
+                )
+
+        if prev_status != cur_status or is_new_race or "is_usa" not in prev_entry:
             changed = True
-        state[key] = {"title": race["title"], "status": cur_status}
+        state[key] = {"title": race["title"], "status": cur_status, "is_usa": is_usa}
+
+    print(f"{usa_count} of those are USA races.")
 
     if changed:
         save_state(state)
