@@ -1,1 +1,74 @@
-{}
+{
+  "https://hyrox.com/event/factor_-hyrox-atlanta/": {
+    "status": "not_on_sale",
+    "title": "Factor_ HYROX Atlanta"
+  },
+  "https://hyrox.com/event/hwpo-hyrox-boston-26-27/": {
+    "status": "on_sale",
+    "title": "HWPO HYROX Boston"
+  },
+  "https://hyrox.com/event/hyrox-anaheim-26-27/": {
+    "status": "on_sale",
+    "title": "Centr HYROX Anaheim"
+  },
+  "https://hyrox.com/event/hyrox-chicago-26-27/": {
+    "status": "on_sale",
+    "title": "Creapure HYROX Chicago"
+  },
+  "https://hyrox.com/event/hyrox-dallas/": {
+    "status": "on_sale",
+    "title": "HYROX Dallas"
+  },
+  "https://hyrox.com/event/hyrox-denver/": {
+    "status": "on_sale",
+    "title": "The Feed HYROX Denver"
+  },
+  "https://hyrox.com/event/hyrox-houston-26-27/": {
+    "status": "not_on_sale",
+    "title": "Academy HYROX Houston"
+  },
+  "https://hyrox.com/event/hyrox-las-vegas-26-27/": {
+    "status": "not_on_sale",
+    "title": "HYROX Las Vegas"
+  },
+  "https://hyrox.com/event/hyrox-nashville/": {
+    "status": "on_sale",
+    "title": "HYROX Nashville"
+  },
+  "https://hyrox.com/event/hyrox-new-york/": {
+    "status": "not_on_sale",
+    "title": "HYROX New York"
+  },
+  "https://hyrox.com/event/hyrox-portland-26-27/": {
+    "status": "not_on_sale",
+    "title": "HYROX Portland"
+  },
+  "https://hyrox.com/event/hyrox-san-diego-26-27/": {
+    "status": "not_on_sale",
+    "title": "E\u014dS Fitness HYROX San Diego"
+  },
+  "https://hyrox.com/event/hyrox-tampa/": {
+    "status": "on_sale",
+    "title": "MyFitnessPal HYROX Tampa"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-anaheim/": {
+    "status": "on_sale",
+    "title": "HYROX Youngstars Anaheim"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-atlanta/": {
+    "status": "not_on_sale",
+    "title": "HYROX Youngstars Atlanta"
+  },
+  "https://hyrox.com/event/hyrox-youngstars-houston/": {
+    "status": "not_on_sale",
+    "title": "HYROX Youngstars Houston"
+  },
+  "https://hyrox.com/event/inbody-hyrox-phoenix-26-27/": {
+    "status": "not_on_sale",
+    "title": "InBody HYROX Phoenix"
+  },
+  "https://hyrox.com/event/sweat-pals-hyrox-miami-beach-26-27/": {
+    "status": "not_on_sale",
+    "title": "Sweatpals HYROX Miami Beach"
+  }
+}
