@@ -2,17 +2,15 @@
 """
 HYROX USA Ticket Watcher
 -------------------------
-Scrapes https://hyrox.com/find-my-race/ , filters it down to USA races,
-compares each race's ticket status against the last known status
-(stored in state.json), and sends a WhatsApp message via CallMeBot
-whenever a race's status changes to "on sale" (covers both first
-release and restocks after a sell-out).
+Scrapes https://hyrox.com/find-my-race/ , works out which races are in the
+USA (by reading each event page's "Event Location" address, cached forever
+in state.json), and sends a WhatsApp message via CallMeBot when:
+  * a brand-new USA race appears on the site, or
+  * a USA race's tickets go on sale (first release or a restock).
 
 Environment variables required (set as GitHub Actions secrets):
-    CALLMEBOT_PHONE   Your WhatsApp number, digits only with country code,
-                      e.g. 15551234567
-    CALLMEBOT_APIKEY  The API key CallMeBot sent you on WhatsApp after
-                      you activated it (see README.md)
+    CALLMEBOT_PHONE   Your WhatsApp number, digits only with country code
+    CALLMEBOT_APIKEY  The API key CallMeBot sent you on WhatsApp
 """
 
 import json
@@ -21,51 +19,59 @@ import re
 import sys
 import time
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 import requests
 from bs4 import BeautifulSoup
 
 FIND_MY_RACE_URL = "https://hyrox.com/find-my-race/"
 STATE_FILE = Path(__file__).parent / "state.json"
+HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; HyroxTicketWatcher/1.0)"}
 
-# Full US state names + abbreviations, used to detect USA races from each
-# individual event page's address text (the find-my-race listing cards
-# don't include country/state info, only a short city code).
-US_STATE_NAMES = {
-    "alabama", "alaska", "arizona", "arkansas", "california", "colorado",
-    "connecticut", "delaware", "florida", "hawaii", "idaho", "illinois",
-    "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine",
-    "maryland", "massachusetts", "michigan", "minnesota", "mississippi",
-    "missouri", "montana", "nebraska", "nevada", "new hampshire",
-    "new jersey", "new mexico", "new york", "north carolina",
-    "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania",
-    "rhode island", "south carolina", "south dakota", "tennessee",
-    "texas", "utah", "vermont", "virginia", "washington",
-    "west virginia", "wisconsin", "wyoming",
-}
-US_MARKERS = {"usa", "united states"} | US_STATE_NAMES
+# If a single run wants to send more than this many alerts, send ONE summary
+# message instead. Protects you from a flood if anything ever goes wrong.
+MAX_INDIVIDUAL_ALERTS = 3
 
 ON_SALE_PHRASES = {"buy tickets", "buy ticket"}
 NOT_ON_SALE_PHRASES = {"find out more", "date coming soon"}
 
-
-def is_usa_page_text(page_text: str) -> bool:
-    t = page_text.lower()
-    return any(marker in t for marker in US_MARKERS)
+US_STATE_NAMES = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+    "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
+    "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
+    "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+    "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+    "New Hampshire", "New Jersey", "New Mexico", "New York",
+    "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
+    "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+    "West Virginia", "Wisconsin", "Wyoming", "District of Columbia",
+]
+US_STATE_CODES = [
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID",
+    "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
+    "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
+    "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
+    "WI", "WY", "DC",
+]
+# "Dallas, Texas 75202"  or  "Atlanta, GA 30313"  (state + 5-digit ZIP)
+US_ADDRESS_RE = re.compile(
+    r"(?:,\s*(?:" + "|".join(US_STATE_CODES) + r")\s+\d{5}\b)"
+    r"|(?:\b(?:" + "|".join(US_STATE_NAMES) + r")\s+\d{5}\b)",
+)
+# The ticket shop HYROX uses for US races.
+US_TICKET_HOSTS = {"usa.hyrox.com"}
 
 
 def fetch_races():
-    resp = requests.get(FIND_MY_RACE_URL, timeout=30, headers={
-        "User-Agent": "Mozilla/5.0 (compatible; HyroxTicketWatcher/1.0)"
-    })
+    resp = requests.get(FIND_MY_RACE_URL, timeout=30, headers=HEADERS)
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, "html.parser")
 
     races = []
     for link in soup.find_all("a", href=re.compile(r"/event/")):
-        text = link.get_text(strip=True)
-        if text.lower() in ON_SALE_PHRASES or text.lower() in NOT_ON_SALE_PHRASES:
+        text = link.get_text(strip=True).lower()
+        if text in ON_SALE_PHRASES or text in NOT_ON_SALE_PHRASES:
             card = link.find_parent(["div", "article", "li"])
             title_tag = card.find(["h2", "h3"]) if card else None
             title = title_tag.get_text(strip=True) if title_tag else None
@@ -74,7 +80,7 @@ def fetch_races():
                 races.append({
                     "title": title,
                     "url": url,
-                    "status": "on_sale" if text.lower() in ON_SALE_PHRASES else "not_on_sale",
+                    "status": "on_sale" if text in ON_SALE_PHRASES else "not_on_sale",
                 })
 
     seen = {}
@@ -83,18 +89,38 @@ def fetch_races():
     return list(seen.values())
 
 
-def fetch_is_usa(url: str) -> bool:
-    """Fetch a single event's own page and check its address text for a
-    USA state/country marker. Only called once per race, then cached."""
+def classify_usa(html: str) -> bool:
+    """True if this event page is for a race in the USA.
+
+    Looks ONLY at the page's 'Event Location:' line and at ticket-shop
+    links -- never at the site-wide menu/footer, which mentions the United
+    States on every single page."""
+    soup = BeautifulSoup(html, "html.parser")
+    text = soup.get_text("\n", strip=True)
+
+    m = re.search(r"Event Location:\s*([^\n|]+)", text)
+    location = m.group(1) if m else ""
+    if location and (US_ADDRESS_RE.search(location)
+                     or "united states" in location.lower()
+                     or re.search(r"\bUSA\b", location)):
+        return True
+
+    for a in soup.find_all("a", href=True):
+        if urlparse(a["href"]).netloc.lower() in US_TICKET_HOSTS:
+            return True
+    return False
+
+
+def fetch_is_usa(url: str):
+    """Returns True/False, or None if the page couldn't be fetched (in which
+    case we simply try again next run instead of caching a wrong answer)."""
     try:
-        resp = requests.get(url, timeout=30, headers={
-            "User-Agent": "Mozilla/5.0 (compatible; HyroxTicketWatcher/1.0)"
-        })
+        resp = requests.get(url, timeout=30, headers=HEADERS)
         resp.raise_for_status()
     except requests.RequestException as e:
-        print(f"Could not fetch {url} to check country: {e}", file=sys.stderr)
-        return False
-    return is_usa_page_text(resp.text)
+        print(f"Could not fetch {url}: {e}", file=sys.stderr)
+        return None
+    return classify_usa(resp.text)
 
 
 def load_state():
@@ -110,12 +136,15 @@ def save_state(state):
 def send_whatsapp(message):
     phone = os.environ["CALLMEBOT_PHONE"]
     apikey = os.environ["CALLMEBOT_APIKEY"]
-
     api_url = (
         "https://api.callmebot.com/whatsapp.php"
         f"?phone={phone}&text={quote(message)}&apikey={apikey}"
     )
-    resp = requests.get(api_url, timeout=30)
+    try:
+        resp = requests.get(api_url, timeout=30)
+    except requests.RequestException as e:
+        print(f"WhatsApp send failed: {e}", file=sys.stderr)
+        return
     if resp.status_code >= 300:
         print(f"WhatsApp send failed: {resp.status_code} {resp.text}", file=sys.stderr)
     else:
@@ -127,53 +156,66 @@ def main():
     print(f"Found {len(races)} total races on the page.")
 
     state = load_state()
+    first_ever_run = not state
     changed = False
     usa_count = 0
+    alerts = []  # collected, then sent with a flood guard
 
     for race in races:
         key = race["url"]
-        prev_entry = state.get(key, {})
-        is_new_race = key not in state
-        prev_status = prev_entry.get("status")
+        prev = state.get(key)
+        is_new_race = prev is None
+        prev_status = prev.get("status") if prev else None
         cur_status = race["status"]
 
-        # Determine (and cache) whether this is a USA race. Only fetches
-        # the individual event page the first time we see this URL.
-        if "is_usa" in prev_entry:
-            is_usa = prev_entry["is_usa"]
+        # "usa" is only trusted if it was computed by this version of the
+        # script; otherwise (missing) we work it out from the event page.
+        if prev is not None and "usa" in prev:
+            is_usa = prev["usa"]
         else:
             is_usa = fetch_is_usa(key)
-            time.sleep(0.5)  # be polite to hyrox.com's servers
+            time.sleep(0.5)  # be polite to hyrox.com
+            if is_usa is None:
+                continue  # couldn't check; retry next run, keep old state
 
         if is_usa:
             usa_count += 1
-
-        if is_usa:
-            if is_new_race:
-                print(f"New USA race detected: {race['title']}")
-                status_word = "already on sale" if cur_status == "on_sale" else "not on sale yet"
-                send_whatsapp(
-                    f"🆕 A new HYROX USA race just appeared: {race['title']} "
-                    f"(tickets {status_word}). {key}"
+            if is_new_race and not first_ever_run:
+                word = "already on sale" if cur_status == "on_sale" else "not on sale yet"
+                alerts.append(
+                    f"🆕 New HYROX USA race added: {race['title']} "
+                    f"(tickets {word}). {key}"
                 )
-            elif cur_status == "on_sale" and prev_status != "on_sale":
-                print(f"Ticket release detected: {race['title']}")
-                send_whatsapp(
+            elif not is_new_race and cur_status == "on_sale" and prev_status != "on_sale":
+                alerts.append(
                     f"🎉 HYROX tickets are now on sale for {race['title']}! "
                     f"Grab yours here: {key}"
                 )
 
-        if prev_status != cur_status or is_new_race or "is_usa" not in prev_entry:
+        new_entry = {"title": race["title"], "status": cur_status, "usa": is_usa}
+        if prev != new_entry:
             changed = True
-        state[key] = {"title": race["title"], "status": cur_status, "is_usa": is_usa}
+        state[key] = new_entry
 
     print(f"{usa_count} of those are USA races.")
+
+    if len(alerts) > MAX_INDIVIDUAL_ALERTS:
+        print(f"{len(alerts)} alerts queued - sending one summary instead.")
+        send_whatsapp(
+            f"HYROX bot: {len(alerts)} USA updates at once. First few:\n"
+            + "\n".join(a.split(" http")[0] for a in alerts[:5])
+            + "\nCheck https://hyrox.com/find-my-race/"
+        )
+    else:
+        for a in alerts:
+            print(a.split(" http")[0])
+            send_whatsapp(a)
 
     if changed:
         save_state(state)
         print("State updated.")
     else:
-        print("No status changes.")
+        print("No changes.")
 
 
 if __name__ == "__main__":
