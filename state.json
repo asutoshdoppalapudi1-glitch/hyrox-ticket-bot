@@ -65,7 +65,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-bangkok/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "BYD HYROX Bangkok",
     "usa": false
   },
@@ -120,7 +120,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-cairo/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Cairo",
     "usa": false
   },
@@ -171,7 +171,7 @@
   },
   "https://hyrox.com/event/hyrox-gdansk/": {
     "status": "on_sale",
-    "title": "HYROX GDA\u0143SK",
+    "title": "SUDOCREM HYROX GDA\u0143SK",
     "usa": false
   },
   "https://hyrox.com/event/hyrox-geneva/": {
