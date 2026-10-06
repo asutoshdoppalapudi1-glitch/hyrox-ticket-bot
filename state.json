@@ -155,7 +155,7 @@
     "usa": true
   },
   "https://hyrox.com/event/hyrox-dubai/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Dubai",
     "usa": false
   },
@@ -478,6 +478,11 @@
     "status": "on_sale",
     "title": "HYROX Youngstars London ExCeL",
     "usa": false
+  },
+  "https://hyrox.com/event/hyrox-youngstars-miami-beach/": {
+    "status": "not_on_sale",
+    "title": "HYROX Youngstars Miami Beach",
+    "usa": true
   },
   "https://hyrox.com/event/hyrox-youngstars-oslo/": {
     "status": "on_sale",
