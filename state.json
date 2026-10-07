@@ -435,7 +435,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-verona/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Verona",
     "usa": false
   },
@@ -515,7 +515,7 @@
     "usa": false
   },
   "https://hyrox.com/event/inbody-hyrox-phoenix-26-27/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "InBody HYROX Phoenix",
     "usa": false
   },
