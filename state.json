@@ -204,6 +204,11 @@
     "title": "INDUSIND BANK HYROX GUJARAT",
     "usa": false
   },
+  "https://hyrox.com/event/hyrox-hanoi/": {
+    "status": "not_on_sale",
+    "title": "HYROX Hanoi",
+    "usa": false
+  },
   "https://hyrox.com/event/hyrox-helsinki-2/": {
     "status": "on_sale",
     "title": "HYROX HELSINKI",
@@ -500,7 +505,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-youngstars-toulouse/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Youngstars Toulouse",
     "usa": false
   },
