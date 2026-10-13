@@ -105,7 +105,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-brisbane/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "BYD HYROX Brisbane",
     "usa": false
   },
@@ -410,7 +410,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-taipei/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Taipei",
     "usa": false
   },
@@ -450,7 +450,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-warsaw-26-27/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX WARSAW",
     "usa": false
   },
