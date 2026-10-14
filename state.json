@@ -405,7 +405,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-shanghai-1031/": {
-    "status": "on_sale",
+    "status": "not_on_sale",
     "title": "ZhongAn HYROX Shanghai",
     "usa": false
   },
@@ -451,7 +451,7 @@
   },
   "https://hyrox.com/event/hyrox-warsaw-26-27/": {
     "status": "on_sale",
-    "title": "HYROX WARSAW",
+    "title": "MEDICOVER SPORT HYROX WARSAW",
     "usa": false
   },
   "https://hyrox.com/event/hyrox-youngstars-amsterdam/": {
