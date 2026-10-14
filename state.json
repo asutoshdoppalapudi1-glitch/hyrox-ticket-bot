@@ -140,7 +140,7 @@
     "usa": true
   },
   "https://hyrox.com/event/hyrox-copenhagen/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "BIOTHERM HYROX Copenhagen",
     "usa": false
   },
