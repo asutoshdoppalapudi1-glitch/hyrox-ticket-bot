@@ -255,7 +255,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-las-vegas-26-27/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Las Vegas",
     "usa": true
   },
