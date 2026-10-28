@@ -225,7 +225,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-houston-26-27/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "Academy HYROX Houston",
     "usa": true
   },
@@ -480,7 +480,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-youngstars-houston/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Youngstars Houston",
     "usa": true
   },
