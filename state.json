@@ -304,6 +304,11 @@
     "title": "HYROX Milan",
     "usa": false
   },
+  "https://hyrox.com/event/hyrox-minneapolis-26-27/": {
+    "status": "not_on_sale",
+    "title": "HYROX Minneapolis",
+    "usa": true
+  },
   "https://hyrox.com/event/hyrox-monterrey/": {
     "status": "not_on_sale",
     "title": "HYROX Monterrey",
@@ -371,7 +376,7 @@
   },
   "https://hyrox.com/event/hyrox-rio-de-janeiro/": {
     "status": "on_sale",
-    "title": "HYROX Rio de Janeiro",
+    "title": "Chevrolet HYROX Rio de Janeiro",
     "usa": false
   },
   "https://hyrox.com/event/hyrox-rome/": {
