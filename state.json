@@ -394,6 +394,11 @@
     "title": "E\u014dS Fitness HYROX San Diego",
     "usa": true
   },
+  "https://hyrox.com/event/hyrox-santiago/": {
+    "status": "not_on_sale",
+    "title": "HYROX Santiago",
+    "usa": false
+  },
   "https://hyrox.com/event/hyrox-sao-paulo-2/": {
     "status": "on_sale",
     "title": "HYROX S\u00e3o Paulo",
