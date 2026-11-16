@@ -264,6 +264,11 @@
     "title": "Amazon HYROX London",
     "usa": false
   },
+  "https://hyrox.com/event/hyrox-london-olympia-2/": {
+    "status": "not_on_sale",
+    "title": "Original Source HYROX London Olympia",
+    "usa": false
+  },
   "https://hyrox.com/event/hyrox-lyon-s26-27/": {
     "status": "not_on_sale",
     "title": "HYROX LYON",
