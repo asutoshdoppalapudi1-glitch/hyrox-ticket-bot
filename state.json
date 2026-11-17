@@ -190,7 +190,7 @@
     "usa": false
   },
   "https://hyrox.com/event/hyrox-guadalajara/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Guadalajara",
     "usa": false
   },
@@ -315,7 +315,7 @@
     "usa": true
   },
   "https://hyrox.com/event/hyrox-monterrey/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "HYROX Monterrey",
     "usa": false
   },
