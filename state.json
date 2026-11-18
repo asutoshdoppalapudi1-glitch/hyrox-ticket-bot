@@ -10,7 +10,7 @@
     "usa": false
   },
   "https://hyrox.com/event/all-inclusive-fitness-hyrox-cologne/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "all inclusive Fitness HYROX Cologne",
     "usa": false
   },
@@ -565,7 +565,7 @@
     "usa": true
   },
   "https://hyrox.com/event/virgin-active-hyrox-cape-town/": {
-    "status": "not_on_sale",
+    "status": "on_sale",
     "title": "Virgin Active HYROX Cape Town ||",
     "usa": false
   },
